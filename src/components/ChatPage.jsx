@@ -13,29 +13,48 @@ const ChatPage = ({ user, currentUser }) => {
   };
 
   return (
-    <div className="flex-1 flex flex-col">
-      <div className="p-4 border-b flex items-center gap-3">
-        <img src={user.photo} alt={user.name} className="w-10 h-10 rounded-full" />
-        <h2 className="font-medium">{user.name}</h2>
+    <div className="flex flex-col h-full">
+      {/* Header */}
+      <div className="p-4 border-b flex items-center gap-3 bg-gray-100">
+        <img
+          src={user.photo}
+          alt={user.name}
+          className="w-10 h-10 rounded-full border"
+        />
+        <h2 className="font-semibold text-lg">{user.name}</h2>
       </div>
-      <div className="flex-1 p-4 space-y-2 overflow-y-auto">
+
+      {/* Messages */}
+      <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-white">
         {messages.map((msg, i) => (
           <div
             key={i}
-            className={`max-w-xs p-2 rounded-lg ${msg.sender === currentUser.name ? 'bg-blue-100 ml-auto' : 'bg-gray-100 mr-auto'}`}
+            className={`max-w-[70%] p-3 rounded-xl shadow ${
+              msg.sender === currentUser.name
+                ? 'bg-blue-100 ml-auto'
+                : 'bg-gray-200 mr-auto'
+            }`}
           >
-            {msg.text && <p>{msg.text}</p>}
-            {msg.image && <img src={msg.image} alt="sent" className="mt-1 max-w-full rounded" />}
+            {msg.text && <p className="text-sm">{msg.text}</p>}
+            {msg.image && (
+              <img
+                src={msg.image}
+                alt="sent"
+                className="mt-2 rounded max-w-full"
+              />
+            )}
           </div>
         ))}
       </div>
-      <div className="p-4 border-t flex items-center gap-2">
+
+      {/* Input */}
+      <div className="p-4 border-t bg-gray-50 flex flex-col sm:flex-row gap-2 items-center">
         <input
           type="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Type a message"
-          className="flex-1 p-2 border rounded"
+          className="flex-1 p-2 border rounded w-full sm:w-auto"
         />
         <input
           type="file"
@@ -48,6 +67,7 @@ const ChatPage = ({ user, currentUser }) => {
               reader.readAsDataURL(file);
             }
           }}
+          className="text-sm"
         />
         <button
           onClick={handleSend}
