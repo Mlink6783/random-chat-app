@@ -22,7 +22,7 @@ const ChatPage = ({ user, currentUser }) => {
         {messages.map((msg, i) => (
           <div
             key={i}
-            className={\`max-w-xs p-2 rounded-lg \${msg.sender === currentUser.name ? 'bg-blue-100 ml-auto' : 'bg-gray-100 mr-auto'}\`}
+            className={`max-w-xs p-2 rounded-lg ${msg.sender === currentUser.name ? 'bg-blue-100 ml-auto' : 'bg-gray-100 mr-auto'}`}
           >
             {msg.text && <p>{msg.text}</p>}
             {msg.image && <img src={msg.image} alt="sent" className="mt-1 max-w-full rounded" />}
