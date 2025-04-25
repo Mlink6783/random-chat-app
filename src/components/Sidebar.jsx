@@ -1,31 +1,28 @@
-import React from 'react';
-import UserCard from './UserCard';
 import { faker } from '@faker-js/faker';
+import UserCard from './UserCard';
 
-const Sidebar = ({ users, onAddUser, onSelectUser }) => {
+const Sidebar = ({ currentUser, users, setUsers, setSelectedUser }) => {
   const addRandomUser = () => {
     const newUser = {
-      id: faker.string.uuid(),
       name: faker.person.firstName(),
-      photo: faker.image.avatarGitHub(),
+      photo: faker.image.avatar(),
     };
-    onAddUser(newUser);
+    setUsers([...users, newUser]);
   };
 
   return (
-    <div className="w-72 border-r overflow-y-auto bg-white">
-      <div className="flex justify-between items-center p-4 border-b">
-        <h2 className="text-lg font-semibold">Users</h2>
-        <button
-          onClick={addRandomUser}
-          className="text-sm bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
-        >
-          Search
-        </button>
+    <div className="w-full md:w-64 border-r bg-white flex flex-col p-4 space-y-4">
+      <button
+        onClick={addRandomUser}
+        className="bg-purple-500 text-white py-2 px-4 rounded hover:bg-purple-600 transition"
+      >
+        + Search User
+      </button>
+      <div className="flex-1 overflow-y-auto space-y-2">
+        {users.map((user, i) => (
+          <UserCard key={i} user={user} onClick={() => setSelectedUser(user)} />
+        ))}
       </div>
-      {users.map((user) => (
-        <UserCard key={user.id} user={user} onSelectUser={onSelectUser} />
-      ))}
     </div>
   );
 };
